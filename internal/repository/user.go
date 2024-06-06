@@ -43,6 +43,29 @@ func (r *userRepository) GetUserByUsername(username string) (*domain.User, error
 	return &user, nil
 }
 
+func (r *userRepository) GetUserByID(userID int32) (*domain.User, error) {
+	stmt := sqlite.SELECT(table.Users.AllColumns).FROM(table.Users).WHERE(
+		table.Users.ID.EQ(sqlite.Int32(userID)))
+
+	var userRecord model.Users
+	err := stmt.Query(r.db, &userRecord)
+	if err != nil {
+		if errors.Is(err, qrm.ErrNoRows) {
+			return nil, domain.ErrUserNotFound
+		}
+		return nil, err
+	}
+
+	user := domain.User{
+		ID:        *userRecord.ID,
+		Username:  userRecord.Password,
+		Password:  userRecord.Password,
+		CreatedAt: *userRecord.CreatedAt,
+	}
+
+	return &user, nil
+}
+
 func (r *userRepository) CreateUser(user *domain.User) (int32, error) {
 	stmt := table.Users.INSERT(table.Users.Username, table.Users.Password).
 		VALUES(user.Username, user.Password).RETURNING(table.Users.ID)

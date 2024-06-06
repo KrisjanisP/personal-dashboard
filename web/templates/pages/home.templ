@@ -2,10 +2,14 @@ package pages
 
 import (
 	"github.com/KrisjanisP/personal-dashboard/internal/domain"
+	"github.com/KrisjanisP/personal-dashboard/web/templates/shared"
 )
 
-templ HomePage(user domain.User) {
-    <div>
-        current username: {user.Username}
-    </div>
+templ HomePage(user *domain.User) {
+    @shared.Page() {
+        <div class="container">
+            <p>Welcome, {user.Username}!</p>
+            <button hx-put="/logout">Logout</button>
+        </div>
+    }    
 }

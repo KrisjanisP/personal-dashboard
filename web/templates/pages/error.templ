@@ -1,0 +1,16 @@
+package pages
+
+import "github.com/KrisjanisP/personal-dashboard/web/templates/shared"
+
+templ ErrorPage(errMsg string) {
+    @shared.Page() {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Error</h1>
+                    <p>{errMsg}</p>
+                </div>
+            </div>
+        </div>
+    }
+}

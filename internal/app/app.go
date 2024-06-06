@@ -1,6 +1,7 @@
 package app
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"net/http"
@@ -38,30 +39,49 @@ func NewApp(addr string) *App {
 func (a *App) ListenAndServe() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
-	r.Get("/", a.Home)
-	r.Put("/login", a.Login)
-	http.ListenAndServe(a.Addr, r)
+	r.With(a.AuthMiddleware).Get("/", a.Home)
+	r.Get("/login", a.LoginGet)
+	r.Put("/login", a.LoginPut)
+	r.Put("/logout", a.LogoutPut)
+	http.ListenAndServe(a.Addr, a.sessionManager.LoadAndSave(r))
+}
+
+func (a *App) AuthMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		userID := a.sessionManager.GetInt32(r.Context(), "user_id")
+		if userID == 0 {
+			http.Redirect(w, r, "/login", http.StatusFound)
+			return
+		}
+
+		ctx := context.WithValue(r.Context(), "user_id", userID)
+
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }
 
 func (a *App) Home(w http.ResponseWriter, r *http.Request) {
-	// msg := sessionManager.GetString(r.Context(), "message")
-	if 2%2 == 0 { // this will be replaces by auth middleware
-		var errMsg string = fmt.Sprintf("Error: %s.", "some error here")
-		if err := pages.AuthenticationPage(&errMsg).Render(r.Context(), w); err != nil {
+	userID := r.Context().Value("user_id").(int32)
+	user, err := a.userRepo.GetUserByID(userID)
+	if err != nil {
+		if err := pages.ErrorPage("internal server error").Render(r.Context(), w); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 		return
 	}
-	user := domain.User{
-		ID:       0,
-		Username: "hello",
-	}
+
 	if err := pages.HomePage(user).Render(r.Context(), w); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
-func (a *App) Login(w http.ResponseWriter, r *http.Request) {
+func (a *App) LoginGet(w http.ResponseWriter, r *http.Request) {
+	if err := pages.AuthenticationPage(nil).Render(r.Context(), w); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func (a *App) LoginPut(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -87,12 +107,11 @@ func (a *App) Login(w http.ResponseWriter, r *http.Request) {
 
 	a.sessionManager.Put(r.Context(), "user_id", user.ID)
 
-	var errMsg string = "further actions are not implemented"
-	if err := pages.AuthenticationPage(&errMsg).Render(r.Context(), w); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+	w.Header().Set("HX-Redirect", "/")
 }
 
-func (a *App) Logout(w http.ResponseWriter, r *http.Request) {
-	// sessionManager.Remove(r.Context(), "message")
+func (a *App) LogoutPut(w http.ResponseWriter, r *http.Request) {
+	a.sessionManager.Remove(r.Context(), "user_id")
+	w.Header().Set("HX-Redirect", "/login")
+	// http.Redirect(w, r, "/login", http.StatusSeeOther)
 }

@@ -1,15 +1,19 @@
 package main
 
 import (
-	"net/http"
+	"flag"
+	"fmt"
 
-	"github.com/labstack/echo/v4"
+	"github.com/KrisjanisP/personal-dashboard/internal/app"
 )
 
 func main() {
-	e := echo.New()
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
-	})
-	e.Logger.Fatal(e.Start(":1323"))
+	var port = ":3000"
+
+	flag.StringVar(&port, "port", port, "port to listen on")
+	flag.Parse()
+
+	app := app.NewApp(fmt.Sprintf("localhost%s", port))
+	app.ListenAndServe()
+
 }

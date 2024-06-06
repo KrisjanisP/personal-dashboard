@@ -8,10 +8,13 @@ import (
 
 	"github.com/KrisjanisP/personal-dashboard/internal"
 	"github.com/KrisjanisP/personal-dashboard/internal/domain"
+	"github.com/KrisjanisP/personal-dashboard/internal/repository"
 	"github.com/KrisjanisP/personal-dashboard/web/templates/pages"
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type App struct {
@@ -26,14 +29,17 @@ func NewApp(addr string) *App {
 	app.sessionManager = scs.New()
 	app.sessionManager.Lifetime = 24 * time.Hour
 
-	return &App{Addr: addr}
+	sqliteDB := sqlx.MustConnect("sqlite3", "./data/sqlite3.db")
+	app.userRepo = repository.NewUserRepository(sqliteDB)
+
+	return app
 }
 
 func (a *App) ListenAndServe() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/", a.Home)
-	r.Post("/login", a.Login)
+	r.Put("/login", a.Login)
 	http.ListenAndServe(a.Addr, r)
 }
 

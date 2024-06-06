@@ -7,7 +7,8 @@ require (
 	github.com/go-chi/chi v1.5.5
 	github.com/go-jet/jet/v2 v2.11.1
 	github.com/golang-migrate/migrate/v4 v4.17.1
-	github.com/mattn/go-sqlite3 v1.14.17
+	github.com/jmoiron/sqlx v1.4.0
+	github.com/mattn/go-sqlite3 v1.14.22
 )
 
 require (

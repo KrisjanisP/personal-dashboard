@@ -3,22 +3,22 @@ package pages
 import "github.com/KrisjanisP/personal-dashboard/web/templates/shared"
 
 templ AuthenticationPage(errorMsg *string) {
-    @shared.Page() {
-        <div id="login-form">
-            <form hx-post="/login" hx-target="#message" hx-swap="innerHTML">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required/>
-                <br/>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required/>
-                <br/>
-                <button type="submit">Login</button>
-            </form>
-        </div>
-        if errorMsg != nil {
-            <div id="message">
-                <p>Error: {*errorMsg}.</p>
-            </div>
-        }
-    }
+	@shared.Page() {
+		<div id="login-form">
+			<form hx-put="/login" hx-swap="inner-html" hx-target="#login-form" hx-indicator="#loading-indicator">
+				<label for="username">Username:</label>
+				<input type="text" id="username" name="username" required/>
+				<br/>
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" required/>
+				<br/>
+				<button type="submit">Login</button>
+			</form>
+			if errorMsg != nil {
+				<div id="message">
+					<p>Error: { *errorMsg }.</p>
+				</div>
+			}
+		</div>
+	}
 }

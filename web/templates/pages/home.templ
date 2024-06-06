@@ -1,0 +1,11 @@
+package pages
+
+import (
+	"github.com/KrisjanisP/personal-dashboard/internal/domain"
+)
+
+templ HomePage(user domain.User) {
+    <div>
+        {user.Username}
+    </div>
+}

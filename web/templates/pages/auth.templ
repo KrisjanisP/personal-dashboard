@@ -1,0 +1,24 @@
+package pages
+
+templ AuthenticationPage() {
+	<html>
+		<head>
+			<title>Login</title>
+			<script src="https://unpkg.com/htmx.org@1.5.0/dist/htmx.min.js"></script>
+		</head>
+		<body>
+			<div id="login-form">
+				<form hx-post="/login" hx-target="#message" hx-swap="innerHTML">
+					<label for="username">Username:</label>
+					<input type="text" id="username" name="username" required/>
+					<br/>
+					<label for="password">Password:</label>
+					<input type="password" id="password" name="password" required/>
+					<br/>
+					<button type="submit">Login</button>
+				</form>
+			</div>
+			<div id="message"></div>
+		</body>
+	</html>
+}

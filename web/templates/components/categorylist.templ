@@ -1,12 +1,13 @@
 package components
 
 import "github.com/KrisjanisP/personal-dashboard/internal/domain"
+import "fmt"
 
 templ CategoryList(categories []*domain.WorkCategory) {
 	<div class="nested" id="category-list">
 		<div>
 			<h3>Add new work category</h3>
-			<form hx-put="/category" hx-swap="outerHTML" hx-target="#category-list" hx-indicator="#add-category-indicator" hx-disabled-elt="input, button">
+			<form hx-put="/category" hx-swap="outerHTML" hx-target="#category-list" hx-disabled-elt="input, button">
 				<table>
 					<tbody>
 						<tr>
@@ -32,9 +33,6 @@ templ CategoryList(categories []*domain.WorkCategory) {
 						</tr>
 					</tbody>
 				</table>
-				<div id="add-category-indicator" hx-indicator="true" style="display: none;">
-					Adding new work category...
-				</div>
 			</form>
 		</div>
 		<div class="nested">
@@ -53,7 +51,7 @@ templ CategoryList(categories []*domain.WorkCategory) {
 							<td>{ category.Abbreviation }</td>
 							<td>{ category.Description }</td>
 							<td>
-								<button disabled>Delete</button>
+								<button hx-delete={fmt.Sprintf("/category/%v",category.ID)} hx-disabled-elt="this" hx-swap="outerHTML" hx-target="#category-list">Delete</button>
 							</td>
 						</tr>
 					}

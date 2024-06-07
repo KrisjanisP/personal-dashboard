@@ -1,11 +1,13 @@
 package app
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/KrisjanisP/personal-dashboard/internal/domain"
 	"github.com/KrisjanisP/personal-dashboard/web/templates/components"
+	"github.com/go-chi/chi"
 )
 
 func (a *App) createCategory(w http.ResponseWriter, r *http.Request) {
@@ -44,7 +46,8 @@ func (a *App) createCategory(w http.ResponseWriter, r *http.Request) {
 func (a *App) deleteCategory(w http.ResponseWriter, r *http.Request) {
 	userID := r.Context().Value("user_id").(int32)
 
-	categoryIDStr := r.URL.Query().Get("id")
+	categoryIDStr := chi.URLParam(r, "id")
+	log.Println("categoryIDStr", categoryIDStr)
 	categoryID, err := strconv.Atoi(categoryIDStr)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)

@@ -83,11 +83,13 @@ func (c *categoryRepoImpl) CreateCategory(userID int32, category *domain.WorkCat
 	if category.Description == "" {
 		return 0, errors.New("description is empty")
 	}
+	deleted := int32(0)
 	stmt := table.WorkCategories.INSERT(table.WorkCategories.MutableColumns).
 		MODEL(&model.WorkCategories{
 			UserID:       &userID,
 			Abbreviation: &category.Abbreviation,
 			Description:  &category.Description,
+			Deleted:      &deleted,
 		}).RETURNING(table.WorkCategories.ID)
 
 	var record model.WorkCategories

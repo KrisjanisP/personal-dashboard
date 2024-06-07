@@ -46,7 +46,7 @@ func (a *App) ListenAndServe() {
 	// routes that require auth cookie
 	r.Group(func(r chi.Router) {
 		r.Use(a.sessionManager.LoadAndSave)
-		r.Use(a.Slow)
+		// r.Use(a.Slow)
 		r.Get("/login", a.viewAuthPage)
 
 		r.Put("/login", a.login)

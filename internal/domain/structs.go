@@ -10,6 +10,7 @@ type User struct {
 }
 
 type WorkCategory struct {
-	ID   int32
-	Name string
+	ID           int32
+	Abbreviation string
+	Description  string
 }

@@ -8,17 +8,19 @@ import (
 )
 
 func (a *App) createCategory(w http.ResponseWriter, r *http.Request) {
+	userID := r.Context().Value("user_id").(int32)
+
 	if err := r.ParseForm(); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	categoryName := r.FormValue("name")
-	userID := r.Context().Value("user_id").(int32)
+	abbreviation := r.FormValue("abbreviation")
+	description := r.FormValue("description")
 
-	_, err := a.categoryRepo.CreateCategory(&domain.WorkCategory{
-		ID:   userID,
-		Name: categoryName,
+	_, err := a.categoryRepo.CreateCategory(userID, &domain.WorkCategory{
+		Abbreviation: abbreviation,
+		Description:  description,
 	})
 
 	if err != nil {

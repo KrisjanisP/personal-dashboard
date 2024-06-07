@@ -11,5 +11,9 @@ package table
 // this method only once at the beginning of the program.
 func UseSchema(schema string) {
 	SchemaMigrations = SchemaMigrations.FromSchema(schema)
+	Sessions = Sessions.FromSchema(schema)
+	TimeTracking = TimeTracking.FromSchema(schema)
+	Todos = Todos.FromSchema(schema)
 	Users = Users.FromSchema(schema)
+	WorkCategories = WorkCategories.FromSchema(schema)
 }

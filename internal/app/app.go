@@ -33,6 +33,7 @@ func NewApp(addr string) *App {
 	app.sessionManager.Lifetime = 24 * time.Hour
 
 	app.userRepo = repository.NewUserRepository(sqliteDB)
+	app.categoryRepo = repository.NewCategoryRepository(sqliteDB)
 
 	return app
 }
@@ -51,9 +52,11 @@ func (a *App) ListenAndServe() {
 		r.Put("/login", a.login)
 		r.Put("/logout", a.logout)
 
-		r.Put("/create/category", a.createCategory)
-
-		r.With(a.AuthMiddleware).Get("/", a.Home)
+		r.Group(func(r chi.Router) {
+			r.Use(a.AuthMiddleware)
+			r.Put("/create/category", a.createCategory)
+			r.Get("/", a.Home)
+		})
 	})
 	log.Println("Listening on", a.Addr)
 	http.ListenAndServe(a.Addr, r)

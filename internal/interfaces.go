@@ -9,5 +9,5 @@ type UserRepo interface {
 }
 
 type CategoryRepo interface {
-	CreateCategory(category *domain.WorkCategory) (int32, error)
+	CreateCategory(userID int32, category *domain.WorkCategory) (int32, error)
 }

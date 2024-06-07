@@ -9,8 +9,15 @@ type UserRepo interface {
 }
 
 type CategoryRepo interface {
-	GetCategoryByID(userID int32, categoryID int32) (*domain.WorkCategory, error)
-	CreateCategory(userID int32, category *domain.WorkCategory) (int32, error)
+	GetCategoryByID(categoryID int32) (*domain.WorkCategory, error)
+	CreateCategory(category *domain.WorkCategory) (int32, error)
 	ListCategories(userID int32) ([]*domain.WorkCategory, error)
 	DeleteCategory(userID int32, categoryID int32) error
+}
+
+type TimeEntryRepo interface {
+	GetTimeEntryByID(timeEntryID int32) (*domain.TimeEntry, error)
+	CreateTimeEntry(timeEntry *domain.TimeEntry) (int32, error)
+	ListTimeEntries(userID int32) ([]*domain.TimeEntry, error)
+	DeleteTimeEntry(timeEntryID int32) error
 }

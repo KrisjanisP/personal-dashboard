@@ -7,7 +7,7 @@ templ CategoryList(categories []*domain.WorkCategory) {
 	<div class="nested" id="category-list">
 		<div>
 			<h3>Add new work category</h3>
-			<form hx-put="/category" hx-swap="outerHTML" hx-target="#category-list" hx-disabled-elt="input, button">
+			<form hx-put="/category"  hx-target="body" hx-disabled-elt="input, button">
 				<table>
 					<tbody>
 						<tr>
@@ -51,7 +51,7 @@ templ CategoryList(categories []*domain.WorkCategory) {
 							<td>{ category.Abbreviation }</td>
 							<td>{ category.Description }</td>
 							<td>
-								<button hx-delete={fmt.Sprintf("/category/%v",category.ID)} hx-disabled-elt="this" hx-swap="outerHTML" hx-target="#category-list">Delete</button>
+								<button hx-delete={fmt.Sprintf("/category/%v",category.ID)} hx-disabled-elt="this" hx-target="body">Delete</button>
 							</td>
 						</tr>
 					}

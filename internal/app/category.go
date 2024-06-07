@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	"github.com/KrisjanisP/personal-dashboard/internal/domain"
-	"github.com/KrisjanisP/personal-dashboard/web/templates/components"
 	"github.com/go-chi/chi"
 )
 
@@ -21,7 +20,8 @@ func (a *App) createCategory(w http.ResponseWriter, r *http.Request) {
 	abbreviation := r.FormValue("abbreviation")
 	description := r.FormValue("description")
 
-	_, err := a.categoryRepo.CreateCategory(userID, &domain.WorkCategory{
+	_, err := a.categoryRepo.CreateCategory(&domain.WorkCategory{
+		OwnerUserID:  userID,
 		Abbreviation: abbreviation,
 		Description:  description,
 	})
@@ -31,16 +31,7 @@ func (a *App) createCategory(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	categories, err := a.categoryRepo.ListCategories(userID)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	if err := components.CategoryList(categories).Render(r.Context(), w); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	a.renderHomeView(w, r)
 }
 
 func (a *App) deleteCategory(w http.ResponseWriter, r *http.Request) {
@@ -54,7 +45,7 @@ func (a *App) deleteCategory(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	category, err := a.categoryRepo.GetCategoryByID(userID, int32(categoryID))
+	category, err := a.categoryRepo.GetCategoryByID(int32(categoryID))
 	if err != nil || category == nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -71,14 +62,5 @@ func (a *App) deleteCategory(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	categories, err := a.categoryRepo.ListCategories(userID)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	if err := components.CategoryList(categories).Render(r.Context(), w); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	a.renderHomeView(w, r)
 }

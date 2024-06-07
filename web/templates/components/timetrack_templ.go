@@ -26,12 +26,12 @@ func TimeTracker(categories []*domain.WorkCategory, entries []*domain.TimeEntry)
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"nested\"><h3>Start tracking time</h3><form><label for=\"work-category\">Select work category:</label> <select id=\"work-category\">")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		for _, category := range categories {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<option value=\"")
+			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -44,7 +44,7 @@ func TimeTracker(categories []*domain.WorkCategory, entries []*domain.TimeEntry)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">")
+			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -57,12 +57,12 @@ func TimeTracker(categories []*domain.WorkCategory, entries []*domain.TimeEntry)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</option>")
+			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 4)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</select> <button type=\"button\" id=\"start-button\">Start</button> <button type=\"button\" id=\"stop-button\" style=\"display:none;\">Stop</button></form><div id=\"time-tracking-info\"><p>Time spent: <span id=\"spent-time\">00:00:00</span></p><div class=\"nested\"><h4>Time sprints (last 10)</h4><table><thead><tr><th>Category</th><th>Start time</th><th>End time</th><th>Duration</th></tr></thead> <tbody id=\"sprints-table\"><tr><td>Category 1</td><td>10:00 AM</td><td>11:00 AM</td><td>1 hour</td></tr></tbody></table></div></div></div>")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 5)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

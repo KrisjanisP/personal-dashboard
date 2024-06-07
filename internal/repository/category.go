@@ -16,10 +16,10 @@ type categoryRepoImpl struct {
 }
 
 // GetCategoryByID implements internal.CategoryRepo.
-func (c *categoryRepoImpl) GetCategoryByID(userID int32, categoryID int32) (*domain.WorkCategory, error) {
+func (c *categoryRepoImpl) GetCategoryByID(categoryID int32) (*domain.WorkCategory, error) {
 	stmt := sqlite.SELECT(table.WorkCategories.AllColumns).
 		FROM(table.WorkCategories).
-		WHERE(table.WorkCategories.UserID.EQ(sqlite.Int32(userID)).AND(table.WorkCategories.ID.EQ(sqlite.Int32(categoryID))))
+		WHERE(table.WorkCategories.ID.EQ(sqlite.Int32(categoryID)))
 
 	var record model.WorkCategories
 	err := stmt.Query(c.db, &record)
@@ -73,7 +73,7 @@ func (c *categoryRepoImpl) ListCategories(userID int32) ([]*domain.WorkCategory,
 }
 
 // CreateCategory implements internal.CategoryRepo.
-func (c *categoryRepoImpl) CreateCategory(userID int32, category *domain.WorkCategory) (int32, error) {
+func (c *categoryRepoImpl) CreateCategory(category *domain.WorkCategory) (int32, error) {
 	if category == nil {
 		return 0, errors.New("category is nil")
 	}
@@ -86,7 +86,7 @@ func (c *categoryRepoImpl) CreateCategory(userID int32, category *domain.WorkCat
 	deleted := int32(0)
 	stmt := table.WorkCategories.INSERT(table.WorkCategories.MutableColumns).
 		MODEL(&model.WorkCategories{
-			UserID:       &userID,
+			UserID:       &category.OwnerUserID,
 			Abbreviation: &category.Abbreviation,
 			Description:  &category.Description,
 			Deleted:      &deleted,

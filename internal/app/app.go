@@ -22,6 +22,7 @@ type App struct {
 	sessionManager *scs.SessionManager
 	userRepo       internal.UserRepo
 	categoryRepo   internal.CategoryRepo
+	timeEntryRepo  internal.TimeEntryRepo
 }
 
 func NewApp(addr string) *App {
@@ -35,6 +36,7 @@ func NewApp(addr string) *App {
 
 	app.userRepo = repository.NewUserRepository(sqliteDB)
 	app.categoryRepo = repository.NewCategoryRepository(sqliteDB)
+	app.timeEntryRepo = repository.NewTimeEntryRepository(sqliteDB)
 
 	return app
 }

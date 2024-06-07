@@ -37,7 +37,7 @@ func CategoryList(categories []*domain.WorkCategory) templ.Component {
 			var templ_7745c5c3_Var2 string
 			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(category.Abbreviation)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/categorylist.templ`, Line: 31, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/categorylist.templ`, Line: 53, Col: 34}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
@@ -50,7 +50,7 @@ func CategoryList(categories []*domain.WorkCategory) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(category.Description)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/categorylist.templ`, Line: 32, Col: 32}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/categorylist.templ`, Line: 54, Col: 33}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {

@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"errors"
+
 	"github.com/KrisjanisP/personal-dashboard/internal"
 	"github.com/KrisjanisP/personal-dashboard/internal/database/model"
 	"github.com/KrisjanisP/personal-dashboard/internal/database/table"
@@ -39,6 +41,15 @@ func (c *categoryRepoImpl) ListCategories(userID int32) ([]*domain.WorkCategory,
 
 // CreateCategory implements internal.CategoryRepo.
 func (c *categoryRepoImpl) CreateCategory(userID int32, category *domain.WorkCategory) (int32, error) {
+	if category == nil {
+		return 0, errors.New("category is nil")
+	}
+	if category.Abbreviation == "" {
+		return 0, errors.New("abbreviation is empty")
+	}
+	if category.Description == "" {
+		return 0, errors.New("description is empty")
+	}
 	stmt := table.WorkCategories.INSERT(table.WorkCategories.MutableColumns).
 		MODEL(&model.WorkCategories{
 			UserID:       &userID,

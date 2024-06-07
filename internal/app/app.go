@@ -6,9 +6,7 @@ import (
 	"time"
 
 	"github.com/KrisjanisP/personal-dashboard/internal"
-	"github.com/KrisjanisP/personal-dashboard/internal/domain"
 	"github.com/KrisjanisP/personal-dashboard/internal/repository"
-	"github.com/KrisjanisP/personal-dashboard/web/templates/pages"
 	"github.com/alexedwards/scs/sqlite3store"
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-chi/chi"
@@ -61,7 +59,7 @@ func (a *App) ListenAndServe() {
 			r.Delete("/category/{id}", a.deleteCategory)
 			r.Get("/time/start", a.startTime)
 			r.Put("/time/stop", a.stopTime)
-			r.Get("/", a.Home)
+			r.Get("/", a.renderHome)
 		})
 	})
 	log.Println("Listening on", a.Addr)
@@ -73,38 +71,4 @@ func (a *App) Slow(next http.Handler) http.Handler {
 		time.Sleep(1 * time.Second)
 		next.ServeHTTP(w, r)
 	})
-}
-
-func (a *App) Home(w http.ResponseWriter, r *http.Request) {
-	userID := r.Context().Value("user_id").(int32)
-	user, err := a.userRepo.GetUserByID(userID)
-	if err != nil {
-		log.Println("error getting user by id:", err)
-		if err := pages.ErrorPage("internal server error").Render(r.Context(), w); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
-		return
-	}
-
-	categories, err := a.categoryRepo.ListCategories(userID)
-	if err != nil {
-		log.Println("error getting categories:", err)
-		if err := pages.ErrorPage("internal server error").Render(r.Context(), w); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
-		return
-	}
-
-	timeEntries := make([]*domain.TimeEntry, 0)
-	timeEntries = append(timeEntries, &domain.TimeEntry{
-		ID:            userID,
-		OwnerUserID:   userID,
-		CategoryID:    1,
-		StartDateTime: time.Now(),
-		EndDateTime:   time.Now().Add(1 * time.Hour),
-	})
-
-	if err := pages.HomePage(user, categories, timeEntries).Render(r.Context(), w); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
 }

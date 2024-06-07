@@ -2,7 +2,14 @@ package components
 
 import "github.com/KrisjanisP/personal-dashboard/internal/domain"
 
-templ TimeTracker(categories []*domain.WorkCategory, entries []*domain.TimeEntry) {
+type TimeTrackerHistoryTableRow struct {
+    CategoryAbbr string
+    StartTime    string
+    EndTime      string
+    Duration     string
+}
+
+templ TimeTracker(categories []*domain.WorkCategory, entries []*TimeTrackerHistoryTableRow) {
 	<div id="time-track">
 		<div class="nested" >
 			<h3>Start tracking time</h3>
@@ -20,12 +27,14 @@ templ TimeTracker(categories []*domain.WorkCategory, entries []*domain.TimeEntry
 						</tr>
 					</thead>
 					<tbody id="sprints-table">
-						<tr>
-							<td>Category 1</td>
-							<td>10:00 AM</td>
-							<td>11:00 AM</td>
-							<td>1 hour</td>
-						</tr>
+                        for _, entry := range entries {
+                            <tr>
+                                <td>{entry.CategoryAbbr}</td>
+                                <td>{entry.StartTime}</td>
+                                <td>{entry.EndTime}</td>
+                                <td>{entry.Duration}</td>
+                            </tr>
+                        }
 					</tbody>
 				</table>
         </div>

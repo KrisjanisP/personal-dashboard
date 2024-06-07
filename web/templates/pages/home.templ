@@ -6,7 +6,7 @@ import (
 	"github.com/KrisjanisP/personal-dashboard/web/templates/components"
 )
 
-templ HomePage(user *domain.User, categories []*domain.WorkCategory, timeEntries []*domain.TimeEntry) {
+templ HomePage(user *domain.User, categories []*domain.WorkCategory, timeEntries []*components.TimeTrackerHistoryTableRow) {
 	@shared.Page() {
 		<div id="home-page" style="max-width:1500px;">
 			<p>Welcome, { user.Username }!</p>

@@ -1,12 +1,14 @@
 package app
 
 import (
+	"log"
 	"net/http"
 
+	"github.com/KrisjanisP/personal-dashboard/web/templates/components"
 	"github.com/KrisjanisP/personal-dashboard/web/templates/pages"
 )
 
-func (a *App) renderHomeView(w http.ResponseWriter, r *http.Request) {
+func (a *App) renderHome(w http.ResponseWriter, r *http.Request) {
 	userID := r.Context().Value("user_id").(int32)
 
 	categories, err := a.categoryRepo.ListCategories(userID)
@@ -27,7 +29,20 @@ func (a *App) renderHomeView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := pages.HomePage(user, categories, timeEntries).Render(r.Context(), w); err != nil {
+	timeTrackerTableRows := make([]*components.TimeTrackerHistoryTableRow, 0)
+	for _, t := range timeEntries {
+		row, err := a.mapDomainTimeEntryToTimeTrackTableRow(t)
+		if err != nil {
+			log.Println("error mapping domain time entry to time tracker table row:", err)
+			if err := pages.ErrorPage("internal server error").Render(r.Context(), w); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+			return
+		}
+		timeTrackerTableRows = append(timeTrackerTableRows, row)
+	}
+
+	if err := pages.HomePage(user, categories, timeTrackerTableRows).Render(r.Context(), w); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

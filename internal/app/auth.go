@@ -62,16 +62,10 @@ func (a *App) login(w http.ResponseWriter, r *http.Request) {
 
 	a.sessionManager.Put(r.Context(), "user_id", user.ID)
 
-	categories, err := a.categoryRepo.ListCategories(user.ID)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
 	w.Header().Set("HX-Push-Url", "/")
-	if err := pages.HomePage(user, categories, []*domain.TimeEntry{}).Render(r.Context(), w); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+	ctx := context.WithValue(r.Context(), "user_id", user.ID)
+	r = r.WithContext(ctx)
+	a.renderHome(w, r)
 }
 
 func (a *App) logout(w http.ResponseWriter, r *http.Request) {

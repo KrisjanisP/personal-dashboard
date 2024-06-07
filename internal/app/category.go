@@ -31,7 +31,7 @@ func (a *App) createCategory(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	a.renderHomeView(w, r)
+	a.renderHome(w, r)
 }
 
 func (a *App) deleteCategory(w http.ResponseWriter, r *http.Request) {
@@ -62,5 +62,5 @@ func (a *App) deleteCategory(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	a.renderHomeView(w, r)
+	a.renderHome(w, r)
 }

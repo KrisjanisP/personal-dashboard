@@ -3,6 +3,7 @@ package app
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/KrisjanisP/personal-dashboard/web/templates/components"
 )
@@ -26,8 +27,15 @@ func (a *App) startTime(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	
-	if err := components.StopTimeComponent(category).Render(r.Context(), w); err != nil {
+
+	currentTime := time.Now()
+	marshalled, err := currentTime.MarshalText()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := components.StopTimeComponent(category, string(marshalled)).Render(r.Context(), w); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

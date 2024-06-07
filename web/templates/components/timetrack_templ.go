@@ -25,7 +25,7 @@ func TimeTracker(categories []*domain.WorkCategory, entries []*domain.TimeEntry)
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"time-track\"><div class=\"nested\"><h3>Start tracking time</h3>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -33,7 +33,7 @@ func TimeTracker(categories []*domain.WorkCategory, entries []*domain.TimeEntry)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"nested\"><h4>Time sprints (last 10)</h4><table><thead><tr><th>Category</th><th>Start time</th><th>End time</th><th>Duration</th></tr></thead> <tbody id=\"sprints-table\"><tr><td>Category 1</td><td>10:00 AM</td><td>11:00 AM</td><td>1 hour</td></tr></tbody></table></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

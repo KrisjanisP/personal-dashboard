@@ -2,7 +2,7 @@ package components;
 
 import "github.com/KrisjanisP/personal-dashboard/internal/domain"
 
-templ StopTimeComponent(category *domain.WorkCategory) {
+templ StopTimeComponent(category *domain.WorkCategory, marshalledTime string) {
 	<form>
 		<table>
 			<tbody>
@@ -19,7 +19,7 @@ templ StopTimeComponent(category *domain.WorkCategory) {
 						Time spent:
 					</td>
 					<td>
-						<code>00:00:00 (hh:mm:ss)</code>
+						<code id="time-elapsed">00:00:00</code><code>(hh:mm:ss)</code>
 					</td>
 				</tr>
 				<tr>
@@ -29,8 +29,22 @@ templ StopTimeComponent(category *domain.WorkCategory) {
 				</tr>
 			</tbody>
 		</table>
+        @templ.JSONScript("time", marshalledTime)
         <script>
-            
+        const data = JSON.parse(document.getElementById('time').textContent);
+        const startDate = new Date(data);
+        console.log(startDate);
+        // update time elapsed
+        const timeElapsed = document.getElementById('time-elapsed');
+        let interval = setInterval(() => {
+            elapsedTime = new Date(new Date() - startDate);
+            formatted = elapsedTime.toISOString().substr(11, 8);
+            // check if correct format, regex match dd:dd:dd
+            if (formatted.match(/^[0-9]{2}:[0-9]{2}:[0-9]{2}$/)) {
+                timeElapsed.textContent = formatted;
+            }
+        }, 1000);
+
         </script>
 	</form>
 }

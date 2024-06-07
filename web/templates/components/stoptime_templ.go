@@ -12,7 +12,7 @@ import "bytes"
 
 import "github.com/KrisjanisP/personal-dashboard/internal/domain"
 
-func StopTimeComponent(category *domain.WorkCategory) templ.Component {
+func StopTimeComponent(category *domain.WorkCategory, marshalledTime string) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -25,7 +25,7 @@ func StopTimeComponent(category *domain.WorkCategory) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form><table><tbody><tr><td><label for=\"work-category\">Selected work category:</label></td><td><code>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -38,7 +38,15 @@ func StopTimeComponent(category *domain.WorkCategory) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</code></td></tr><tr><td>Time spent:</td><td><code id=\"time-elapsed\">00:00:00</code><code>(hh:mm:ss)</code></td></tr><tr><td colspan=\"2\" align=\"right\"><button type=\"button\" id=\"start-button\">Stop tracking time</button></td></tr></tbody></table>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templ.JSONScript("time", marshalledTime).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script>\n        const data = JSON.parse(document.getElementById('time').textContent);\n        const startDate = new Date(data);\n        console.log(startDate);\n        // update time elapsed\n        const timeElapsed = document.getElementById('time-elapsed');\n        let interval = setInterval(() => {\n            elapsedTime = new Date(new Date() - startDate);\n            formatted = elapsedTime.toISOString().substr(11, 8);\n            // check if correct format, regex match dd:dd:dd\n            if (formatted.match(/^[0-9]{2}:[0-9]{2}:[0-9]{2}$/)) {\n                timeElapsed.textContent = formatted;\n            }\n        }, 1000);\n\n        </script></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

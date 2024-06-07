@@ -1,2 +1,0 @@
-<div id=\"time-track\"><div class=\"nested\"><h3>Start tracking time</h3>
-</div><div class=\"nested\"><h4>Time sprints (last 10)</h4><table><thead><tr><th>Category</th><th>Start time</th><th>End time</th><th>Duration</th></tr></thead> <tbody id=\"sprints-table\"><tr><td>Category 1</td><td>10:00 AM</td><td>11:00 AM</td><td>1 hour</td></tr></tbody></table></div></div>

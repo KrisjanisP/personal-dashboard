@@ -23,12 +23,12 @@ func LoginForm(errorMsg *string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"login-form\"><form hx-put=\"/login\" hx-push-url=\"true\" hx-swap=\"inner-html\" hx-target=\"#login-form\" hx-indicator=\"#login-indicator\" hx-disabled-elt=\"input, button\"><label for=\"username\">Username:</label> <input type=\"text\" id=\"username\" name=\"username\" required><br><label for=\"password\">Password:</label> <input type=\"password\" id=\"password\" name=\"password\" required><br><button type=\"submit\" id=\"login-sbmt-btn\">Login</button><br><div id=\"login-indicator\" hx-indicator=\"true\" style=\"display: none;\">Logging in...</div></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if errorMsg != nil {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"message\"><p>Error: ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -41,12 +41,12 @@ func LoginForm(errorMsg *string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(".</p></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 4)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

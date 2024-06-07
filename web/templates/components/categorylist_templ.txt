@@ -1,6 +1,0 @@
-<div id=\"category-list\"><div class=\"nested\"><div><h3>Add new work category</h3><form hx-put=\"/category\" hx-target=\"body\" hx-disabled-elt=\"input, button\"><table><tbody><tr><td><label for=\"new-work-category\">Abbreviation:</label></td><td><input type=\"text\" id=\"new-work-category\" name=\"abbreviation\" required></td></tr><tr><td><label for=\"new-work-category-description\">Description:</label></td><td><input type=\"text\" id=\"new-work-category-description\" name=\"description\" required></td></tr><tr><td align=\"right\" colspan=\"2\"><button type=\"submit\">Add work category</button></td></tr></tbody></table></form></div></div><div class=\"nested\"><h3>Work categories</h3><table><thead><tr><th>Abbreviation</th><th>Short description</th><th>Action</th></tr></thead> <tbody>
-<tr><td>
-</td><td>
-</td><td><button hx-delete=\"
-\" hx-disabled-elt=\"this\" hx-target=\"body\">Delete</button></td></tr>
-</tbody></table></div></div>

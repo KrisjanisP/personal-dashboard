@@ -28,7 +28,13 @@ func (a *App) createCategory(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := components.CategoryList().Render(r.Context(), w); err != nil {
+	categories, err := a.categoryRepo.ListCategories(userID)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := components.CategoryList(categories).Render(r.Context(), w); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

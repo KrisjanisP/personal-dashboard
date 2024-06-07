@@ -6,7 +6,7 @@ import (
 	"github.com/KrisjanisP/personal-dashboard/web/templates/components"
 )
 
-templ HomePage(user *domain.User) {
+templ HomePage(user *domain.User, categories []*domain.WorkCategory) {
 	@shared.Page() {
 		<div id="home-page" style="max-width:1500px;">
 			<p>Welcome, { user.Username }!</p>
@@ -15,7 +15,7 @@ templ HomePage(user *domain.User) {
 				Logging out...
 			</div>
 			<h2>Work & Todos</h2>
-			@components.CategoryList()
+			@components.CategoryList(categories)
 			<!-- Start Tracking Time Section -->
 			<div class="nested" hidden>
 				<h3>Start tracking time</h3>

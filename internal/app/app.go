@@ -73,13 +73,23 @@ func (a *App) Home(w http.ResponseWriter, r *http.Request) {
 	userID := r.Context().Value("user_id").(int32)
 	user, err := a.userRepo.GetUserByID(userID)
 	if err != nil {
+		log.Println("error getting user by id:", err)
 		if err := pages.ErrorPage("internal server error").Render(r.Context(), w); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 		return
 	}
 
-	if err := pages.HomePage(user).Render(r.Context(), w); err != nil {
+	categories, err := a.categoryRepo.ListCategories(userID)
+	if err != nil {
+		log.Println("error getting categories:", err)
+		if err := pages.ErrorPage("internal server error").Render(r.Context(), w); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		return
+	}
+
+	if err := pages.HomePage(user, categories).Render(r.Context(), w); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }

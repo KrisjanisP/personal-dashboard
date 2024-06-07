@@ -62,8 +62,10 @@ func (a *App) login(w http.ResponseWriter, r *http.Request) {
 
 	a.sessionManager.Put(r.Context(), "user_id", user.ID)
 
+	categories, err := a.categoryRepo.ListCategories(user.ID)
+
 	w.Header().Set("HX-Push-Url", "/")
-	if err := pages.HomePage(user).Render(r.Context(), w); err != nil {
+	if err := pages.HomePage(user, categories).Render(r.Context(), w); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }

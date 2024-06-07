@@ -1,6 +1,8 @@
 package components
 
-templ CategoryList() {
+import "github.com/KrisjanisP/personal-dashboard/internal/domain"
+
+templ CategoryList(categories []*domain.WorkCategory) {
 	<div class="nested" id="category-list">
 		<div>
 			<h3>Add new work category</h3>
@@ -24,20 +26,15 @@ templ CategoryList() {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>PROGLV</td>
-						<td>programme.lv projekts</td>
-						<td>
-							<button disabled>Delete</button>
-						</td>
-					</tr>
-					<tr>
-						<td>LUMII</td>
-						<td>LU Matemātikas un informātikas institūts</td>
-						<td>
-							<button disabled>Delete</button>
-						</td>
-					</tr>
+					for _, category := range categories {
+						<tr>
+							<td>{category.Abbreviation}</td>
+							<td>{category.Description}</td>
+							<td>
+								<button disabled>Delete</button>
+							</td>
+						</tr>
+					}
 				</tbody>
 			</table>
 		</div>

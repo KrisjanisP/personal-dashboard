@@ -14,7 +14,7 @@ type categoryRepoImpl struct {
 }
 
 // ListCategories implements internal.CategoryRepo.
-func (c *categoryRepoImpl) ListCategories(userID int32) ([]domain.WorkCategory, error) {
+func (c *categoryRepoImpl) ListCategories(userID int32) ([]*domain.WorkCategory, error) {
 	stmt := sqlite.SELECT(table.WorkCategories.AllColumns).
 		FROM(table.WorkCategories).
 		WHERE(table.WorkCategories.UserID.EQ(sqlite.Int32(userID)))
@@ -25,9 +25,9 @@ func (c *categoryRepoImpl) ListCategories(userID int32) ([]domain.WorkCategory, 
 		return nil, err
 	}
 
-	var mapped []domain.WorkCategory
+	var mapped []*domain.WorkCategory
 	for _, record := range records {
-		mapped = append(mapped, domain.WorkCategory{
+		mapped = append(mapped, &domain.WorkCategory{
 			ID:           *record.ID,
 			Abbreviation: *record.Abbreviation,
 			Description:  *record.Description,

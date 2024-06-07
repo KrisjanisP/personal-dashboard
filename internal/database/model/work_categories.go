@@ -8,6 +8,8 @@
 package model
 
 type WorkCategories struct {
-	ID   *int32 `sql:"primary_key"`
-	Name string
+	ID           *int32 `sql:"primary_key"`
+	UserID       *int32
+	Abbreviation *string
+	Description  *string
 }

@@ -17,8 +17,10 @@ type workCategoriesTable struct {
 	sqlite.Table
 
 	// Columns
-	ID   sqlite.ColumnInteger
-	Name sqlite.ColumnString
+	ID           sqlite.ColumnInteger
+	UserID       sqlite.ColumnInteger
+	Abbreviation sqlite.ColumnString
+	Description  sqlite.ColumnString
 
 	AllColumns     sqlite.ColumnList
 	MutableColumns sqlite.ColumnList
@@ -59,18 +61,22 @@ func newWorkCategoriesTable(schemaName, tableName, alias string) *WorkCategories
 
 func newWorkCategoriesTableImpl(schemaName, tableName, alias string) workCategoriesTable {
 	var (
-		IDColumn       = sqlite.IntegerColumn("id")
-		NameColumn     = sqlite.StringColumn("name")
-		allColumns     = sqlite.ColumnList{IDColumn, NameColumn}
-		mutableColumns = sqlite.ColumnList{NameColumn}
+		IDColumn           = sqlite.IntegerColumn("id")
+		UserIDColumn       = sqlite.IntegerColumn("user_id")
+		AbbreviationColumn = sqlite.StringColumn("abbreviation")
+		DescriptionColumn  = sqlite.StringColumn("description")
+		allColumns         = sqlite.ColumnList{IDColumn, UserIDColumn, AbbreviationColumn, DescriptionColumn}
+		mutableColumns     = sqlite.ColumnList{UserIDColumn, AbbreviationColumn, DescriptionColumn}
 	)
 
 	return workCategoriesTable{
 		Table: sqlite.NewTable(schemaName, tableName, alias, allColumns...),
 
 		//Columns
-		ID:   IDColumn,
-		Name: NameColumn,
+		ID:           IDColumn,
+		UserID:       UserIDColumn,
+		Abbreviation: AbbreviationColumn,
+		Description:  DescriptionColumn,
 
 		AllColumns:     allColumns,
 		MutableColumns: mutableColumns,

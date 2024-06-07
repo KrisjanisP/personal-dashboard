@@ -16,7 +16,7 @@ import (
 	"github.com/KrisjanisP/personal-dashboard/web/templates/shared"
 )
 
-func HomePage(user *domain.User, categories []*domain.WorkCategory) templ.Component {
+func HomePage(user *domain.User, categories []*domain.WorkCategory, timeEntries []*domain.TimeEntry) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -35,7 +35,7 @@ func HomePage(user *domain.User, categories []*domain.WorkCategory) templ.Compon
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"home-page\" style=\"max-width:1500px;\"><p>Welcome, ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -48,7 +48,7 @@ func HomePage(user *domain.User, categories []*domain.WorkCategory) templ.Compon
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("!</p><button hx-put=\"/logout\" hx-target=\"#home-page\" hx-indicator=\"#logout-indicator\" hx-disabled-elt=\"this\">Logout</button><div id=\"logout-indicator\" hx-indicator=\"true\" style=\"display: none;\">Logging out...</div><h2>Work & Todos</h2>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -56,7 +56,11 @@ func HomePage(user *domain.User, categories []*domain.WorkCategory) templ.Compon
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
+			templ_7745c5c3_Err = components.TimeTracker(categories, timeEntries).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!-- Add Work Category Section --><!-- Work Categories Daily Time Spent Table --><div class=\"nested\" hidden><h3>Time spent on work categories</h3><div class=\"nested\"><h4>Daily time spent (last 7 Days)</h4><table><thead><tr><th>Category</th><th>Day 1</th><th>Day 2</th><th>Day 3</th><th>Day 4</th><th>Day 5</th><th>Day 6</th><th>Day 7</th></tr></thead> <tbody><tr><td>Category 1</td><td>2 hours</td><td>1.5 hours</td><td>3 hours</td><td>2 hours</td><td>4 hours</td><td>1 hour</td><td>2.5 hours</td></tr></tbody></table></div><!-- Work Categories Weekly Time Spent Table --><div class=\"nested\"><h4>Weekly time spent (last 4 weeks)</h4><table><thead><tr><th>Category</th><th>Week 1</th><th>Week 2</th><th>Week 3</th><th>Week 4</th></tr></thead> <tbody><tr><td>Category 1</td><td>10 hours</td><td>12 hours</td><td>14 hours</td><td>8 hours</td></tr></tbody></table></div></div><!-- Create New Todo Section --><div hidden><div class=\"nested\" id=\"todo-list\"><div><h3>Create New Todo</h3><form><table><tr><td><label for=\"todo-job\">Job:</label></td><td><input type=\"text\" id=\"todo-job\" required></td></tr><tr><td><label for=\"todo-name\">Name:</label></td><td><input type=\"text\" id=\"todo-name\" required></td></tr><tr><td><label for=\"todo-description\">Description:</label></td><td><textarea id=\"todo-description\" required></textarea></td></tr><tr><td><label for=\"todo-deadline\">Deadline:</label></td><td><input type=\"datetime-local\" id=\"todo-deadline\"></td></tr><tr><td><label for=\"todo-priority\">Priority:</label></td><td><select id=\"todo-priority\"><option value=\"1\" selected>nice to have</option> <option value=\"2\">should have</option> <option value=\"3\">as soon as possible</option></select></td></tr><tr align=\"right\"><td colspan=\"2\"><button type=\"button\">Add Todo</button></td></tr></table></form></div><!-- Unfinished Todos Table --><div class=\"nested\"><h3>Unfinished Todos</h3><table><thead><tr><th>Job</th><th>Name</th><th>Deadline</th><th>Priority</th><th>Description</th><th>Action</th></tr></thead> <tbody><tr><td>Job 1</td><td>Task A</td><td>2024-06-10</td><td>1</td><td>Complete the report</td><td><button type=\"button\">Mark as Finished</button></td></tr></tbody></table></div></div></div><!-- Finished Todos Table --><div hidden><h3>Finished Todos</h3><table><thead><tr><th>Job</th><th>Name</th><th>Deadline</th><th>Priority</th><th>Description</th></tr></thead> <tbody><tr><td>Job 2</td><td>Task B</td><td>2024-05-30</td><td>2</td><td>Review the document</td></tr></tbody></table></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

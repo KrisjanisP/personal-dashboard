@@ -15,3 +15,11 @@ type WorkCategory struct {
 	Abbreviation string
 	Description  string
 }
+
+type TimeEntry struct {
+	ID            int32
+	OwnerUserID   int32
+	CategoryID    int32
+	StartDateTime time.Time
+	EndDateTime   time.Time
+}

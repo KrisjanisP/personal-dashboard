@@ -6,7 +6,7 @@ import (
 	"github.com/KrisjanisP/personal-dashboard/web/templates/components"
 )
 
-templ HomePage(user *domain.User, categories []*domain.WorkCategory) {
+templ HomePage(user *domain.User, categories []*domain.WorkCategory, timeEntries []*domain.TimeEntry) {
 	@shared.Page() {
 		<div id="home-page" style="max-width:1500px;">
 			<p>Welcome, { user.Username }!</p>
@@ -16,44 +16,7 @@ templ HomePage(user *domain.User, categories []*domain.WorkCategory) {
 			</div>
 			<h2>Work & Todos</h2>
 			@components.CategoryList(categories)
-			<!-- Start Tracking Time Section -->
-			<div class="nested">
-				<h3>Start tracking time</h3>
-				<form>
-					<label for="work-category">Select work category:</label>
-					<select id="work-category">
-						<option value="Category 1">Category 1</option>
-						<option value="Category 2">Category 2</option>
-						<option value="Category 3">Category 3</option>
-					</select>
-					<button type="button" id="start-button">Start</button>
-					<button type="button" id="stop-button" style="display:none;">Stop</button>
-				</form>
-				<div id="time-tracking-info">
-					<p>Time spent: <span id="spent-time">00:00:00</span></p>
-					<div class="nested">
-						<h4>Time sprints (last 10)</h4>
-						<table>
-							<thead>
-								<tr>
-									<th>Category</th>
-									<th>Start time</th>
-									<th>End time</th>
-									<th>Duration</th>
-								</tr>
-							</thead>
-							<tbody id="sprints-table">
-								<tr>
-									<td>Category 1</td>
-									<td>10:00 AM</td>
-									<td>11:00 AM</td>
-									<td>1 hour</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
+			@components.TimeTracker(categories, timeEntries)
 			<!-- Add Work Category Section -->
 			<!-- Work Categories Daily Time Spent Table -->
 			<div class="nested" hidden>

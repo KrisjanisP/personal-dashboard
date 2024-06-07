@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/KrisjanisP/personal-dashboard/internal"
+	"github.com/KrisjanisP/personal-dashboard/internal/domain"
 	"github.com/KrisjanisP/personal-dashboard/internal/repository"
 	"github.com/KrisjanisP/personal-dashboard/web/templates/pages"
 	"github.com/alexedwards/scs/sqlite3store"
@@ -90,7 +91,16 @@ func (a *App) Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := pages.HomePage(user, categories).Render(r.Context(), w); err != nil {
+	timeEntries := make([]*domain.TimeEntry, 0)
+	timeEntries = append(timeEntries, &domain.TimeEntry{
+		ID:            userID,
+		OwnerUserID:   userID,
+		CategoryID:    1,
+		StartDateTime: time.Now(),
+		EndDateTime:   time.Now().Add(1 * time.Hour),
+	})
+
+	if err := pages.HomePage(user, categories, timeEntries).Render(r.Context(), w); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }

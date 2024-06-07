@@ -1,2 +1,0 @@
-<!doctype html><html lang=\"en\"><head><title>Login</title><script src=\"https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js\"></script><link rel=\"stylesheet\" href=\"/public/style.css\"></head><body>
-</body></html>

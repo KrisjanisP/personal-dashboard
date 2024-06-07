@@ -1,0 +1,4 @@
+CREATE TABLE work_categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE
+);

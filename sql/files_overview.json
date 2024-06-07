@@ -1,0 +1,18 @@
+[
+    {
+        "filename": "./migrations/1717749229_create_sessions_table.down.sql",
+        "content": "DROP TABLE sessions;"
+    },
+    {
+        "filename": "./migrations/1717679515_create_users_table.up.sql",
+        "content": "-- user_table.sql\nCREATE TABLE users (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    username TEXT NOT NULL UNIQUE,\n    password TEXT NOT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n"
+    },
+    {
+        "filename": "./migrations/1717749229_create_sessions_table.up.sql",
+        "content": "CREATE TABLE sessions (\n  token TEXT PRIMARY KEY,\n  data BLOB NOT NULL,\n  expiry TIMESTAMP NOT NULL\n);\n"
+    },
+    {
+        "filename": "./migrations/1717679515_create_users_table.down.sql",
+        "content": "DROP TABLE users;\n"
+    }
+]

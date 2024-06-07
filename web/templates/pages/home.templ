@@ -17,7 +17,7 @@ templ HomePage(user *domain.User, categories []*domain.WorkCategory) {
 			<h2>Work & Todos</h2>
 			@components.CategoryList(categories)
 			<!-- Start Tracking Time Section -->
-			<div class="nested" hidden>
+			<div class="nested">
 				<h3>Start tracking time</h3>
 				<form>
 					<label for="work-category">Select work category:</label>
@@ -113,6 +113,7 @@ templ HomePage(user *domain.User, categories []*domain.WorkCategory) {
 				</div>
 			</div>
 			<!-- Create New Todo Section -->
+			<div hidden>
 			<div class="nested" id="todo-list">
 				<div>
 					<h3>Create New Todo</h3>
@@ -178,6 +179,7 @@ templ HomePage(user *domain.User, categories []*domain.WorkCategory) {
 						</tbody>
 					</table>
 				</div>
+			</div>
 			</div>
 			<!-- Finished Todos Table -->
 			<div hidden>

@@ -31,7 +31,7 @@ func AuthenticationPage(errorMsg *string) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"login-form\"><form hx-put=\"/login\" hx-push-url=\"true\" hx-swap=\"inner-html\" hx-target=\"#login-form\" hx-indicator=\"#loading-indicator\" hx-disabled-elt=\"input, button\"><label for=\"username\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"login-form\"><form hx-put=\"/login\" hx-push-url=\"true\" hx-swap=\"inner-html\" hx-target=\"#login-form\" hx-indicator=\"#login-indicator\" hx-disabled-elt=\"input, button\"><label for=\"username\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -58,16 +58,16 @@ func AuthenticationPage(errorMsg *string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button><br><div><span id=\"loading-indicator\" hx-indicator=\"true\" style=\"display: none;\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button><br><div id=\"login-indicator\" hx-indicator=\"true\" style=\"display: none;\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var6 := `Loading...`
+			templ_7745c5c3_Var6 := `Logging in...`
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span></div></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

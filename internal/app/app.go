@@ -42,7 +42,7 @@ func (a *App) ListenAndServe() {
 
 	r.Group(func(r chi.Router) {
 		r.Use(a.sessionManager.LoadAndSave)
-		r.Use(a.Slow)
+		// r.Use(a.Slow)
 		r.Get("/login", a.LoginGet)
 		r.Put("/login", a.LoginPut)
 		r.Put("/logout", a.LogoutPut)
@@ -134,6 +134,8 @@ func (a *App) LoginPut(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) LogoutPut(w http.ResponseWriter, r *http.Request) {
 	a.sessionManager.Remove(r.Context(), "user_id")
-	w.Header().Set("HX-Redirect", "/login")
-	// http.Redirect(w, r, "/login", http.StatusSeeOther)
+	w.Header().Set("HX-Push-Url", "/login")
+	if err := pages.AuthenticationPage(nil).Render(r.Context(), w); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }

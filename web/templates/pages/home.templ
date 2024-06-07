@@ -6,10 +6,13 @@ import (
 )
 
 templ HomePage(user *domain.User) {
-    @shared.Page() {
-        <div class="container">
-            <p>Welcome, {user.Username}!</p>
-            <button hx-put="/logout">Logout</button>
-        </div>
-    }    
+	@shared.Page() {
+		<div id="home-page">
+			<p>Welcome, { user.Username }!</p>
+			<button hx-put="/logout" hx-target="#home-page" hx-indicator="#logout-indicator" hx-disabled-elt="this">Logout</button>
+			<div id="logout-indicator" hx-indicator="true" style="display: none;" >
+				Logging out...
+			</div>
+		</div>
+	}
 }

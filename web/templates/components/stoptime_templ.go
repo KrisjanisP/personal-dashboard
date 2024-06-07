@@ -33,7 +33,7 @@ func StopTimeComponent(category *domain.WorkCategory, marshalledTime string) tem
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(category.Abbreviation)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/stoptime.templ`, Line: 15, Col: 52}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/stoptime.templ`, Line: 15, Col: 46}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {

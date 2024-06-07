@@ -12,7 +12,7 @@ templ StopTimeComponent(category *domain.WorkCategory, marshalledTime string) {
 						<label for="work-category">Selected work category:</label>
 					</td>
 					<td>
-                        <code>{category.Abbreviation}</code>
+                        {category.Abbreviation}
                         <input type="hidden" name="work-category" value={fmt.Sprintf("%v",category.Abbreviation)}/>
 					</td>
 				</tr>

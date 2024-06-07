@@ -3,6 +3,7 @@ package app
 import (
 	"log"
 	"net/http"
+	"sort"
 
 	"github.com/KrisjanisP/personal-dashboard/web/templates/components"
 	"github.com/KrisjanisP/personal-dashboard/web/templates/pages"
@@ -28,6 +29,11 @@ func (a *App) renderHome(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	// sort by start time (oldest comes first)
+	sort.Slice(timeEntries, func(i, j int) bool {
+		return timeEntries[i].StartDateTime.After(timeEntries[j].StartDateTime)
+	})
 
 	timeTrackerTableRows := make([]*components.TimeTrackerHistoryTableRow, 0)
 	for _, t := range timeEntries {

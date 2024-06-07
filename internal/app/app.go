@@ -10,6 +10,7 @@ import (
 	"github.com/KrisjanisP/personal-dashboard/internal/domain"
 	"github.com/KrisjanisP/personal-dashboard/internal/repository"
 	"github.com/KrisjanisP/personal-dashboard/web/templates/pages"
+	"github.com/alexedwards/scs/sqlite3store"
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -26,10 +27,12 @@ type App struct {
 func NewApp(addr string) *App {
 	app := &App{Addr: addr}
 
+	sqliteDB := sqlx.MustConnect("sqlite3", "./data/sqlite3.db")
+
 	app.sessionManager = scs.New()
+	app.sessionManager.Store = sqlite3store.New(sqliteDB.DB)
 	app.sessionManager.Lifetime = 24 * time.Hour
 
-	sqliteDB := sqlx.MustConnect("sqlite3", "./data/sqlite3.db")
 	app.userRepo = repository.NewUserRepository(sqliteDB)
 
 	return app

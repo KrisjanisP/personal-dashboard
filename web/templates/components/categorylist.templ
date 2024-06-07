@@ -6,7 +6,7 @@ templ CategoryList(categories []*domain.WorkCategory) {
 	<div class="nested" id="category-list">
 		<div>
 			<h3>Add new work category</h3>
-			<form hx-put="/create/category" hx-swap="outerHTML" hx-target="#category-list" hx-indicator="#add-category-indicator" hx-disabled-elt="input, button">
+			<form hx-put="/category" hx-swap="outerHTML" hx-target="#category-list" hx-indicator="#add-category-indicator" hx-disabled-elt="input, button">
 				<table>
 					<tbody>
 						<tr>

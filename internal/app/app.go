@@ -54,7 +54,8 @@ func (a *App) ListenAndServe() {
 
 		r.Group(func(r chi.Router) {
 			r.Use(a.AuthMiddleware)
-			r.Put("/create/category", a.createCategory)
+			r.Put("/category", a.createCategory)
+			r.Delete("/category/{id}", a.deleteCategory)
 			r.Get("/", a.Home)
 		})
 	})

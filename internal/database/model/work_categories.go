@@ -12,4 +12,5 @@ type WorkCategories struct {
 	UserID       *int32
 	Abbreviation *string
 	Description  *string
+	Deleted      *int32
 }

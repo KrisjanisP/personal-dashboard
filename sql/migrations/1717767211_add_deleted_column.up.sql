@@ -1,0 +1,1 @@
+ALTER TABLE work_categories ADD COLUMN deleted INTEGER DEFAULT 0;

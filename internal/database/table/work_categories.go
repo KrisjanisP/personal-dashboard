@@ -21,6 +21,7 @@ type workCategoriesTable struct {
 	UserID       sqlite.ColumnInteger
 	Abbreviation sqlite.ColumnString
 	Description  sqlite.ColumnString
+	Deleted      sqlite.ColumnInteger
 
 	AllColumns     sqlite.ColumnList
 	MutableColumns sqlite.ColumnList
@@ -65,8 +66,9 @@ func newWorkCategoriesTableImpl(schemaName, tableName, alias string) workCategor
 		UserIDColumn       = sqlite.IntegerColumn("user_id")
 		AbbreviationColumn = sqlite.StringColumn("abbreviation")
 		DescriptionColumn  = sqlite.StringColumn("description")
-		allColumns         = sqlite.ColumnList{IDColumn, UserIDColumn, AbbreviationColumn, DescriptionColumn}
-		mutableColumns     = sqlite.ColumnList{UserIDColumn, AbbreviationColumn, DescriptionColumn}
+		DeletedColumn      = sqlite.IntegerColumn("deleted")
+		allColumns         = sqlite.ColumnList{IDColumn, UserIDColumn, AbbreviationColumn, DescriptionColumn, DeletedColumn}
+		mutableColumns     = sqlite.ColumnList{UserIDColumn, AbbreviationColumn, DescriptionColumn, DeletedColumn}
 	)
 
 	return workCategoriesTable{
@@ -77,6 +79,7 @@ func newWorkCategoriesTableImpl(schemaName, tableName, alias string) workCategor
 		UserID:       UserIDColumn,
 		Abbreviation: AbbreviationColumn,
 		Description:  DescriptionColumn,
+		Deleted:      DeletedColumn,
 
 		AllColumns:     allColumns,
 		MutableColumns: mutableColumns,

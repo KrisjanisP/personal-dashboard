@@ -11,6 +11,7 @@ type User struct {
 
 type WorkCategory struct {
 	ID           int32
+	OwnerUserID  int32
 	Abbreviation string
 	Description  string
 }

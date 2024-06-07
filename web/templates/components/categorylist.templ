@@ -2,11 +2,41 @@ package components
 
 templ CategoryList() {
 	<div class="nested" id="category-list">
-		<h3>Add new work category</h3>
-		<form >
-			<label for="new-work-category">New work category:</label>
-			<input type="text" id="new-work-category"/>
-			<button type="button">Add</button>
-		</form>
+		<div>
+			<h3>Add new work category</h3>
+			<form>
+				<label for="new-work-category">New work category:</label>
+				<input type="text" id="new-work-category"/>
+				<button type="button">Add</button>
+			</form>
+		</div>
+		<div class="nested">
+			<h3>Work categories</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Abbreviation</th>
+						<th>Short description</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>PROGLV</td>
+						<td>programme.lv projekts</td>
+						<td>
+							<button disabled>Delete</button>
+						</td>
+					</tr>
+					<tr>
+						<td>LUMII</td>
+						<td>LU Matemātikas un informātikas institūts</td>
+						<td>
+							<button disabled>Delete</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 }

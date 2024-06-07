@@ -5,14 +5,18 @@ import "github.com/KrisjanisP/personal-dashboard/web/templates/shared"
 templ AuthenticationPage(errorMsg *string) {
 	@shared.Page() {
 		<div id="login-form">
-			<form hx-put="/login" hx-swap="inner-html" hx-target="#login-form" hx-indicator="#loading-indicator">
+			<form hx-put="/login" hx-push-url="true" hx-swap="inner-html" hx-target="#login-form" hx-indicator="#loading-indicator" hx-disabled-elt="input, button">
 				<label for="username">Username:</label>
 				<input type="text" id="username" name="username" required/>
 				<br/>
 				<label for="password">Password:</label>
 				<input type="password" id="password" name="password" required/>
 				<br/>
-				<button type="submit">Login</button>
+				<button type="submit" id="login-sbmt-btn">Login</button>
+				<br/>
+                <div>
+                    <span id="loading-indicator" hx-indicator="true" style="display: none;">Loading...</span>
+                </div>
 			</form>
 			if errorMsg != nil {
 				<div id="message">

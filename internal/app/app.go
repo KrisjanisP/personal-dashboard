@@ -3,7 +3,6 @@ package app
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -39,11 +38,24 @@ func NewApp(addr string) *App {
 func (a *App) ListenAndServe() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
-	r.With(a.AuthMiddleware).Get("/", a.Home)
-	r.Get("/login", a.LoginGet)
-	r.Put("/login", a.LoginPut)
-	r.Put("/logout", a.LogoutPut)
-	http.ListenAndServe(a.Addr, a.sessionManager.LoadAndSave(r))
+	r.Get("/public/*", http.StripPrefix("/public/", http.FileServer(http.Dir("web/public"))).ServeHTTP)
+
+	r.Group(func(r chi.Router) {
+		r.Use(a.sessionManager.LoadAndSave)
+		r.Use(a.Slow)
+		r.Get("/login", a.LoginGet)
+		r.Put("/login", a.LoginPut)
+		r.Put("/logout", a.LogoutPut)
+		r.With(a.AuthMiddleware).Get("/", a.Home)
+	})
+	http.ListenAndServe(a.Addr, r)
+}
+
+func (a *App) Slow(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(2 * time.Second)
+		next.ServeHTTP(w, r)
+	})
 }
 
 func (a *App) AuthMiddleware(next http.Handler) http.Handler {
@@ -88,7 +100,6 @@ func (a *App) LoginPut(w http.ResponseWriter, r *http.Request) {
 	}
 	username := r.FormValue("username")
 	password := r.FormValue("password")
-	fmt.Println(username, password)
 
 	user, err := a.userRepo.GetUserByUsername(username)
 	if err != nil {
@@ -105,9 +116,20 @@ func (a *App) LoginPut(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	if user.Password != password {
+		var errMsg string = "invalid username or password"
+		if err := pages.AuthenticationPage(&errMsg).Render(r.Context(), w); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		return
+	}
+
 	a.sessionManager.Put(r.Context(), "user_id", user.ID)
 
-	w.Header().Set("HX-Redirect", "/")
+	w.Header().Set("HX-Push-Url", "/")
+	if err := pages.HomePage(user).Render(r.Context(), w); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func (a *App) LogoutPut(w http.ResponseWriter, r *http.Request) {

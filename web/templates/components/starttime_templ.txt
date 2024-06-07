@@ -1,0 +1,5 @@
+<form id=\"start-time\" hx-get=\"/time/start\" hx-target=\"#start-time\" hx-disabled-elt=\"input, button\"><table><tbody><tr><td><label for=\"work-category\">Select work category:</label></td><td><select id=\"work-category\" name=\"work-category\">
+<option value=\"
+\">
+</option>
+</select></td></tr><tr><td>Time spent:</td><td><code>00:00:00 (hh:mm:ss)</code></td></tr><tr><td colspan=\"2\" align=\"right\"><button type=\"submit\" id=\"start-button\">Start tracking time</button></td></tr></tbody></table></form>

@@ -1,0 +1,36 @@
+package components;
+
+import "github.com/KrisjanisP/personal-dashboard/internal/domain"
+
+templ StopTimeComponent(category *domain.WorkCategory) {
+	<form>
+		<table>
+			<tbody>
+				<tr>
+					<td>
+						<label for="work-category">Selected work category:</label>
+					</td>
+					<td>
+                        <code>{category.Abbreviation}</code>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Time spent:
+					</td>
+					<td>
+						<code>00:00:00 (hh:mm:ss)</code>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="right">
+						<button type="button" id="start-button">Stop tracking time</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+        <script>
+            
+        </script>
+	</form>
+}

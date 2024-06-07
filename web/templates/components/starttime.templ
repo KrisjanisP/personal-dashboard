@@ -5,7 +5,7 @@ import "github.com/KrisjanisP/personal-dashboard/internal/domain"
 import "fmt"
 
 templ StartTimeComponent(categories []*domain.WorkCategory) {
-	<form id="start-time" hx-get="/time/start" hx-target="#start-time" hx-disabled-elt="input, button">
+	<form id="start-time" hx-get="/time/start" hx-target="#start-time" hx-swap="outerHTML" hx-disabled-elt="input, button">
 		<table>
 			<tbody>
 				<tr>

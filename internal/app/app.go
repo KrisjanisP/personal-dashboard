@@ -60,6 +60,7 @@ func (a *App) ListenAndServe() {
 			r.Put("/category", a.createCategory)
 			r.Delete("/category/{id}", a.deleteCategory)
 			r.Get("/time/start", a.startTime)
+			r.Put("/time/stop", a.stopTime)
 			r.Get("/", a.Home)
 		})
 	})

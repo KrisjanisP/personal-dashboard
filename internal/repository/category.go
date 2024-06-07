@@ -15,6 +15,26 @@ type categoryRepoImpl struct {
 	db *sqlx.DB
 }
 
+// GetCategoryByAbbreviation implements internal.CategoryRepo.
+func (c *categoryRepoImpl) GetCategoryByAbbreviation(userID int32, abbreviation string) (*domain.WorkCategory, error) {
+	stmt := sqlite.SELECT(table.WorkCategories.AllColumns).
+		FROM(table.WorkCategories).
+		WHERE(table.WorkCategories.UserID.EQ(sqlite.Int32(userID)).AND(table.WorkCategories.Abbreviation.EQ(sqlite.String(abbreviation))))
+
+	var record model.WorkCategories
+	err := stmt.Query(c.db, &record)
+	if err != nil {
+		return nil, err
+	}
+
+	return &domain.WorkCategory{
+		ID:           *record.ID,
+		OwnerUserID:  *record.UserID,
+		Abbreviation: *record.Abbreviation,
+		Description:  *record.Description,
+	}, nil
+}
+
 // GetCategoryByID implements internal.CategoryRepo.
 func (c *categoryRepoImpl) GetCategoryByID(categoryID int32) (*domain.WorkCategory, error) {
 	stmt := sqlite.SELECT(table.WorkCategories.AllColumns).

@@ -10,6 +10,7 @@ type UserRepo interface {
 
 type CategoryRepo interface {
 	GetCategoryByID(categoryID int32) (*domain.WorkCategory, error)
+	GetCategoryByAbbreviation(userID int32, abbreviation string) (*domain.WorkCategory, error)
 	CreateCategory(category *domain.WorkCategory) (int32, error)
 	ListCategories(userID int32) ([]*domain.WorkCategory, error)
 	DeleteCategory(userID int32, categoryID int32) error

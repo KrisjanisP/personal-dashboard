@@ -9,6 +9,7 @@ import (
 
 func (a *App) mapDomainTimeEntryToTimeTrackTableRow(t *domain.TimeEntry) (*components.TimeTrackerHistoryTableRow, error) {
 	res := &components.TimeTrackerHistoryTableRow{
+		TimeEntryID:  int(t.ID),
 		CategoryAbbr: "",
 		StartTime:    "",
 		EndTime:      "",

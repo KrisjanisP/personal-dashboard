@@ -138,15 +138,18 @@ templ HomePage(user *domain.User) {
 						</tr>
 						<tr>
 							<td><label for="todo-deadline">Deadline:</label></td>
-							<td><input type="date" id="todo-deadline"/></td>
+							<td>
+
+                            <input type="datetime-local" id="todo-deadline"/>
+                            </td>
 						</tr>
 						<tr>
 							<td><label for="todo-priority">Priority:</label></td>
 							<td>
 								<select id="todo-priority">
-									<option value="1" selected>1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
+									<option value="1" selected>nice to have</option>
+									<option value="2">should have</option>
+									<option value="3">as soon as possible</option>
 								</select>
 							</td>
 						</tr>

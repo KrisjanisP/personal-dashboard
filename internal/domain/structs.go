@@ -8,3 +8,8 @@ type User struct {
 	Password  string
 	CreatedAt time.Time
 }
+
+type WorkCategory struct {
+	ID   int32
+	Name string
+}

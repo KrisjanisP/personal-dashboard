@@ -7,3 +7,7 @@ type UserRepo interface {
 	CreateUser(user *domain.User) (int32, error)
 	GetUserByID(userID int32) (*domain.User, error)
 }
+
+type CategoryRepo interface {
+	CreateCategory(category *domain.WorkCategory) (int32, error)
+}

@@ -3,6 +3,7 @@ package pages
 import (
 	"github.com/KrisjanisP/personal-dashboard/internal/domain"
 	"github.com/KrisjanisP/personal-dashboard/web/templates/shared"
+	"github.com/KrisjanisP/personal-dashboard/web/templates/components"
 )
 
 templ HomePage(user *domain.User) {
@@ -14,14 +15,7 @@ templ HomePage(user *domain.User) {
 				Logging out...
 			</div>
 			<h2>Work & Todos</h2>
-			<div class="nested">
-				<h3>Add new work category</h3>
-				<form>
-					<label for="new-work-category">New work category:</label>
-					<input type="text" id="new-work-category"/>
-					<button type="button">Add</button>
-				</form>
-			</div>
+            @components.CategoryList()
 			<!-- Start Tracking Time Section -->
 			<div class="nested">
 				<h3>Start tracking time</h3>

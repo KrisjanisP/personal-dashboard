@@ -36,3 +36,10 @@ h1, h2, h3, h4 {
 .nested .nested {
     margin: 10px 0;
 }
+
+#todo-list {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}

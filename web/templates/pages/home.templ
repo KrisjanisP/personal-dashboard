@@ -10,8 +10,184 @@ templ HomePage(user *domain.User) {
 		<div id="home-page">
 			<p>Welcome, { user.Username }!</p>
 			<button hx-put="/logout" hx-target="#home-page" hx-indicator="#logout-indicator" hx-disabled-elt="this">Logout</button>
-			<div id="logout-indicator" hx-indicator="true" style="display: none;" >
+			<div id="logout-indicator" hx-indicator="true" style="display: none;">
 				Logging out...
+			</div>
+			<h2>Work & Todos</h2>
+			<!-- Start Tracking Time Section -->
+			<div>
+				<h3>Start Tracking Time</h3>
+				<form>
+					<label for="work-category">Select Work Category:</label>
+					<select id="work-category">
+						<option value="Category 1">Category 1</option>
+						<option value="Category 2">Category 2</option>
+						<option value="Category 3">Category 3</option>
+					</select>
+					<button type="button" id="start-button">Start</button>
+					<button type="button" id="stop-button" style="display:none;">Stop</button>
+				</form>
+				<div id="time-tracking-info" style="display:none;">
+					<p>Time Spent: <span id="spent-time">00:00:00</span></p>
+					<h4>Time Sprints</h4>
+					<table>
+						<thead>
+							<tr>
+								<th>Category</th>
+								<th>Start Time</th>
+								<th>End Time</th>
+								<th>Duration</th>
+							</tr>
+						</thead>
+						<tbody id="sprints-table">
+							<tr>
+								<td>Category 1</td>
+								<td>10:00 AM</td>
+								<td>11:00 AM</td>
+								<td>1 hour</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- Add Work Category Section -->
+			<div>
+				<h3>Add New Work Category</h3>
+				<form>
+					<label for="new-work-category">New Work Category:</label>
+					<input type="text" id="new-work-category"/>
+					<button type="button">Add</button>
+				</form>
+			</div>
+			<!-- Work Categories Daily Time Spent Table -->
+			<div>
+				<h3>Daily Time Spent on Work Categories (Last 7 Days)</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Category</th>
+							<th>Day 1</th>
+							<th>Day 2</th>
+							<th>Day 3</th>
+							<th>Day 4</th>
+							<th>Day 5</th>
+							<th>Day 6</th>
+							<th>Day 7</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Category 1</td>
+							<td>2 hours</td>
+							<td>1.5 hours</td>
+							<td>3 hours</td>
+							<td>2 hours</td>
+							<td>4 hours</td>
+							<td>1 hour</td>
+							<td>2.5 hours</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- Work Categories Weekly Time Spent Table -->
+			<div>
+				<h3>Weekly Time Spent on Work Categories (Last 4 Weeks)</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Category</th>
+							<th>Week 1</th>
+							<th>Week 2</th>
+							<th>Week 3</th>
+							<th>Week 4</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Category 1</td>
+							<td>10 hours</td>
+							<td>12 hours</td>
+							<td>14 hours</td>
+							<td>8 hours</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- Create New Todo Section -->
+			<div>
+				<h3>Create New Todo</h3>
+				<form>
+					<label for="todo-job">Job:</label>
+					<input type="text" id="todo-job" required/>
+					<br/>
+					<label for="todo-name">Name:</label>
+					<input type="text" id="todo-name" required/>
+					<br/>
+					<label for="todo-description">Description:</label>
+					<textarea id="todo-description" required></textarea>
+					<br/>
+					<label for="todo-deadline">Deadline:</label>
+					<input type="date" id="todo-deadline"/>
+					<br/>
+					<label for="todo-priority">Priority:</label>
+					<select id="todo-priority">
+						<option value="1" selected>1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+					<br/>
+					<button type="button">Add Todo</button>
+				</form>
+			</div>
+			<!-- Unfinished Todos Table -->
+			<div>
+				<h3>Unfinished Todos</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Job</th>
+							<th>Name</th>
+							<th>Deadline</th>
+							<th>Priority</th>
+							<th>Description</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Job 1</td>
+							<td>Task A</td>
+							<td>2024-06-10</td>
+							<td>1</td>
+							<td>Complete the report</td>
+							<td><button type="button">Mark as Finished</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- Finished Todos Table -->
+			<div>
+				<h3>Finished Todos</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Job</th>
+							<th>Name</th>
+							<th>Deadline</th>
+							<th>Priority</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Job 2</td>
+							<td>Task B</td>
+							<td>2024-05-30</td>
+							<td>2</td>
+							<td>Review the document</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	}

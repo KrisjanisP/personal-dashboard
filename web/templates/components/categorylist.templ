@@ -4,7 +4,8 @@ import "github.com/KrisjanisP/personal-dashboard/internal/domain"
 import "fmt"
 
 templ CategoryList(categories []*domain.WorkCategory) {
-	<div class="nested" id="category-list">
+	<div id="category-list">
+	<div class="nested" >
 		<div>
 			<h3>Add new work category</h3>
 			<form hx-put="/category"  hx-target="body" hx-disabled-elt="input, button">
@@ -35,28 +36,29 @@ templ CategoryList(categories []*domain.WorkCategory) {
 				</table>
 			</form>
 		</div>
-		<div class="nested">
-			<h3>Work categories</h3>
-			<table>
-				<thead>
+	</div>
+	<div class="nested">
+		<h3>Work categories</h3>
+		<table>
+			<thead>
+				<tr>
+					<th>Abbreviation</th>
+					<th>Short description</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				for _, category := range categories {
 					<tr>
-						<th>Abbreviation</th>
-						<th>Short description</th>
-						<th>Action</th>
+						<td>{ category.Abbreviation }</td>
+						<td>{ category.Description }</td>
+						<td>
+							<button hx-delete={fmt.Sprintf("/category/%v",category.ID)} hx-disabled-elt="this" hx-target="body">Delete</button>
+						</td>
 					</tr>
-				</thead>
-				<tbody>
-					for _, category := range categories {
-						<tr>
-							<td>{ category.Abbreviation }</td>
-							<td>{ category.Description }</td>
-							<td>
-								<button hx-delete={fmt.Sprintf("/category/%v",category.ID)} hx-disabled-elt="this" hx-target="body">Delete</button>
-							</td>
-						</tr>
-					}
-				</tbody>
-			</table>
-		</div>
+				}
+			</tbody>
+		</table>
+	</div>
 	</div>
 }

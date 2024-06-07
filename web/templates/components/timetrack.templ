@@ -4,20 +4,42 @@ import "github.com/KrisjanisP/personal-dashboard/internal/domain"
 import "fmt"
 
 templ TimeTracker(categories []*domain.WorkCategory, entries []*domain.TimeEntry) {
-	<div class="nested">
-		<h3>Start tracking time</h3>
-		<form>
-			<label for="work-category">Select work category:</label>
-			<select id="work-category">
-                for _, category := range categories {
-                    <option value={fmt.Sprintf("%v",category.ID)}>{category.Abbreviation}</option>
-                }
-			</select>
-			<button type="button" id="start-button">Start</button>
-			<button type="button" id="stop-button" style="display:none;">Stop</button>
-		</form>
-		<div id="time-tracking-info">
-			<p>Time spent: <span id="spent-time">00:00:00</span></p>
+	<div id="time-track">
+		<div class="nested" >
+			<h3>Start tracking time</h3>
+			<form>
+				<table>
+					<tbody>
+						<tr>
+							<td>
+								<label for="work-category">Select work category:</label>
+							</td>
+							<td>
+								<select id="work-category">
+									for _, category := range categories {
+										<option value={ fmt.Sprintf("%v", category.ID) }>{ category.Abbreviation }</option>
+									}
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="description">Time spent:</label>
+							</td>
+							<td>
+								<code>00:00:00 (hh:mm:ss)</code>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="right">
+								<button type="button" id="start-button">Start tracking time</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button type="button" id="stop-button" style="display:none;">Stop</button>
+			</form>
+		</div>
 			<div class="nested">
 				<h4>Time sprints (last 10)</h4>
 				<table>
@@ -38,7 +60,6 @@ templ TimeTracker(categories []*domain.WorkCategory, entries []*domain.TimeEntry
 						</tr>
 					</tbody>
 				</table>
-			</div>
-		</div>
+        </div>
 	</div>
 }

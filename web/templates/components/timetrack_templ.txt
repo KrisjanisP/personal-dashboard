@@ -1,5 +1,5 @@
-<div class=\"nested\"><h3>Start tracking time</h3><form><label for=\"work-category\">Select work category:</label> <select id=\"work-category\">
+<div id=\"time-track\"><div class=\"nested\"><h3>Start tracking time</h3><form><table><tbody><tr><td><label for=\"work-category\">Select work category:</label></td><td><select id=\"work-category\">
 <option value=\"
 \">
 </option>
-</select> <button type=\"button\" id=\"start-button\">Start</button> <button type=\"button\" id=\"stop-button\" style=\"display:none;\">Stop</button></form><div id=\"time-tracking-info\"><p>Time spent: <span id=\"spent-time\">00:00:00</span></p><div class=\"nested\"><h4>Time sprints (last 10)</h4><table><thead><tr><th>Category</th><th>Start time</th><th>End time</th><th>Duration</th></tr></thead> <tbody id=\"sprints-table\"><tr><td>Category 1</td><td>10:00 AM</td><td>11:00 AM</td><td>1 hour</td></tr></tbody></table></div></div></div>
+</select></td></tr><tr><td><label for=\"description\">Time spent:</label></td><td><code>00:00:00 (hh:mm:ss)</code></td></tr><tr><td colspan=\"2\" align=\"right\"><button type=\"button\" id=\"start-button\">Start tracking time</button></td></tr></tbody></table><button type=\"button\" id=\"stop-button\" style=\"display:none;\">Stop</button></form></div><div class=\"nested\"><h4>Time sprints (last 10)</h4><table><thead><tr><th>Category</th><th>Start time</th><th>End time</th><th>Duration</th></tr></thead> <tbody id=\"sprints-table\"><tr><td>Category 1</td><td>10:00 AM</td><td>11:00 AM</td><td>1 hour</td></tr></tbody></table></div></div>

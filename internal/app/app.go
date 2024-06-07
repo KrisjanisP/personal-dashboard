@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"errors"
+	"log"
 	"net/http"
 	"time"
 
@@ -51,6 +52,7 @@ func (a *App) ListenAndServe() {
 		r.Put("/logout", a.LogoutPut)
 		r.With(a.AuthMiddleware).Get("/", a.Home)
 	})
+	log.Println("Listening on", a.Addr)
 	http.ListenAndServe(a.Addr, r)
 }
 

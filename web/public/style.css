@@ -1,3 +1,38 @@
 .htmx-request {
-    display: block !important;
+  display: block !important;
+}
+
+table,
+td,
+th {
+  border: 1px solid;
+  padding: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  background-color: white;
+}
+
+body {
+    padding: 10px 50px;
+}
+
+input, button {
+    margin: 10px 0;
+}
+
+h1, h2, h3, h4 {
+    margin-top: 10px;
+}
+
+.nested {
+    background-color:rgba(0, 0, 0, 0.02);
+    padding: 10px;
+    border: 1px solid black;
+    margin: 20px 0;
+}
+
+.nested .nested {
+    margin: 10px 0;
 }

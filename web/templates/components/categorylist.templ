@@ -4,10 +4,13 @@ templ CategoryList() {
 	<div class="nested" id="category-list">
 		<div>
 			<h3>Add new work category</h3>
-			<form>
+			<form  hx-put="/create/category" hx-push-url="true" hx-swap="inner-html" hx-target="#category-list" hx-indicator="#add-category-indicator" hx-disabled-elt="input, button">
 				<label for="new-work-category">New work category:</label>
 				<input type="text" id="new-work-category"/>
-				<button type="button">Add</button>
+				<button type="submit">Add</button>
+				<div id="add-category-indicator" hx-indicator="true" style="display: none;">
+					Adding new work category...
+				</div>
 			</form>
 		</div>
 		<div class="nested">

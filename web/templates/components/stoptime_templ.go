@@ -26,7 +26,7 @@ func StopTimeComponent(category *domain.WorkCategory, marshalledTime string) tem
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-put=\"/time/stop\" hx-target=\"body\" hx-disabled-elt=\"input, button\"><table><tbody><tr><td><label for=\"work-category\">Select work category:</label></td><td>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -39,7 +39,7 @@ func StopTimeComponent(category *domain.WorkCategory, marshalledTime string) tem
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <input type=\"hidden\" name=\"work-category\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -52,7 +52,7 @@ func StopTimeComponent(category *domain.WorkCategory, marshalledTime string) tem
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></td></tr><tr><td>Time spent:</td><td><code id=\"time-elapsed\">00:00:00</code> (hh:mm:ss)</td></tr><tr><td colspan=\"2\" align=\"right\"><button type=\"submit\" id=\"start-button\">Stop tracking time</button></td></tr></tbody></table><input type=\"hidden\" id=\"time-start\" name=\"start\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -65,15 +65,15 @@ func StopTimeComponent(category *domain.WorkCategory, marshalledTime string) tem
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 4)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"> <input type=\"hidden\" id=\"time-input\" name=\"seconds\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.JSONScript("time", marshalledTime).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templ.JSONScript("start-time", marshalledTime).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 5)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<script>\n        if (typeof start === 'undefined') {\n            var start = new Date(JSON.parse(document.getElementById('start-time').textContent));\n        } else {\n            start = new Date(JSON.parse(document.getElementById('start-time').textContent));\n        }\n\n        if (typeof intervalUpdElapsedTime !== 'undefined') {\n            clearInterval(interval);\n        } else {\n            let intervalUpdElapsedTime = setInterval(() => {\n                try {\n                    let currentTime = new Date();\n                    elapsedTime = new Date(currentTime - start);\n                    formatted = elapsedTime.toISOString().substr(11, 8);\n                    if (formatted.match(/^[0-9]{2}:[0-9]{2}:[0-9]{2}$/)) {\n                        document.getElementById('time-elapsed').textContent = formatted;\n                        document.getElementById('time-input').value = (elapsedTime.getTime() / 1000).toFixed(0);\n                    }\n                } catch (e) {\n                    clearInterval(intervalUpdElapsedTime);\n                }\n            }, 1000);\n        }\n\n        </script></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

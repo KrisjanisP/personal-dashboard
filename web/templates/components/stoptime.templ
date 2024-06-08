@@ -9,7 +9,7 @@ templ StopTimeComponent(category *domain.WorkCategory, marshalledTime string) {
 			<tbody>
 				<tr>
 					<td>
-						<label for="work-category">Selected work category:</label>
+						<label for="work-category">Select work category:</label>
 					</td>
 					<td>
                         {category.Abbreviation}
@@ -21,7 +21,7 @@ templ StopTimeComponent(category *domain.WorkCategory, marshalledTime string) {
 						Time spent:
 					</td>
 					<td>
-						<code id="time-elapsed">00:00:00</code>(hh:mm:ss)
+						<code id="time-elapsed">00:00:00</code> (hh:mm:ss)
 					</td>
 				</tr>
 				<tr>
@@ -33,18 +33,31 @@ templ StopTimeComponent(category *domain.WorkCategory, marshalledTime string) {
 		</table>
         <input type="hidden" id="time-start" name="start" value={marshalledTime}/>
         <input type="hidden" id="time-input" name="seconds"/>
-        @templ.JSONScript("time", marshalledTime)
+        @templ.JSONScript("start-time", marshalledTime)
         <script>
-        const start = new Date(JSON.parse(document.getElementById('time').textContent));
+        if (typeof start === 'undefined') {
+            var start = new Date(JSON.parse(document.getElementById('start-time').textContent));
+        } else {
+            start = new Date(JSON.parse(document.getElementById('start-time').textContent));
+        }
 
-        let interval = setInterval(() => {
-            elapsedTime = new Date(new Date() - start);
-            formatted = elapsedTime.toISOString().substr(11, 8);
-            if (formatted.match(/^[0-9]{2}:[0-9]{2}:[0-9]{2}$/)) {
-                document.getElementById('time-elapsed').textContent = formatted;
-                document.getElementById('time-input').value = elapsedTime.getSeconds();
-            }
-        }, 1000);
+        if (typeof intervalUpdElapsedTime !== 'undefined') {
+            clearInterval(interval);
+        } else {
+            let intervalUpdElapsedTime = setInterval(() => {
+                try {
+                    let currentTime = new Date();
+                    elapsedTime = new Date(currentTime - start);
+                    formatted = elapsedTime.toISOString().substr(11, 8);
+                    if (formatted.match(/^[0-9]{2}:[0-9]{2}:[0-9]{2}$/)) {
+                        document.getElementById('time-elapsed').textContent = formatted;
+                        document.getElementById('time-input').value = (elapsedTime.getTime() / 1000).toFixed(0);
+                    }
+                } catch (e) {
+                    clearInterval(intervalUpdElapsedTime);
+                }
+            }, 1000);
+        }
 
         </script>
 	</form>

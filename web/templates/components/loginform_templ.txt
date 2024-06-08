@@ -1,4 +1,0 @@
-<div id=\"login-form\"><form hx-put=\"/login\" hx-push-url=\"true\" hx-swap=\"inner-html\" hx-target=\"#login-form\" hx-indicator=\"#login-indicator\" hx-disabled-elt=\"input, button\"><label for=\"username\">Username:</label> <input type=\"text\" id=\"username\" name=\"username\" required><br><label for=\"password\">Password:</label> <input type=\"password\" id=\"password\" name=\"password\" required><br><button type=\"submit\" id=\"login-sbmt-btn\">Login</button><br><div id=\"login-indicator\" hx-indicator=\"true\" style=\"display: none;\">Logging in...</div></form>
-<div id=\"message\"><p>Error: 
-.</p></div>
-</div>

@@ -58,7 +58,7 @@ func (r *userRepository) GetUserByID(userID int32) (*domain.User, error) {
 
 	user := domain.User{
 		ID:        *userRecord.ID,
-		Username:  userRecord.Password,
+		Username:  userRecord.Username,
 		Password:  userRecord.Password,
 		CreatedAt: *userRecord.CreatedAt,
 	}
